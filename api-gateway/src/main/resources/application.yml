@@ -1,0 +1,42 @@
+server:
+  port: 8080 # El Frontend siempre apuntara aqui
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"
+      routes:
+        # Ruta para el servicio de Luis
+        - id: ruta-catalogo
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/v1/catalogo/**
+            
+        # Ruta para nuestro Orquestador
+        - id: ruta-orquestador-pos
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/v1/ventas-pos/**
+            
+        # Ruta para nuestro Inventario
+        - id: ruta-inventario
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/v1/inventario/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
