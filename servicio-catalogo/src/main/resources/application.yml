@@ -1,0 +1,16 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: servicio-catalogo
+  data:
+    mongodb:
+      uri: mongodb://admin:secretpassword@localhost:27017/innovatech_catalogo?authSource=admin
+
+# Configuracion de Swagger para que Luis pueda probar su API localmente
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html

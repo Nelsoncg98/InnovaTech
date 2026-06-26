@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Base de Datos Relacional (PostgreSQL) para Clientes, Inventario y Ventas
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: innovatech-postgres
+    environment:
+      POSTGRES_USER: innovatech
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: innovatech_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - soa-network
+
+  # Base de Datos No Relacional (MongoDB) para el Catálogo Web (Requisito de Rúbrica)
+  mongo-db:
+    image: mongo:6.0
+    container_name: innovatech-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secretpassword
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - soa-network
+
+networks:
+  soa-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  mongo_data:
