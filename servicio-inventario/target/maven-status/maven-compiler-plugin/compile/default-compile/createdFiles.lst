@@ -1,0 +1,5 @@
+com\innovatech\inventario\InventarioApplication.class
+com\innovatech\inventario\model\Inventario.class
+com\innovatech\inventario\repository\InventarioRepository.class
+com\innovatech\inventario\controller\InventarioController.class
+com\innovatech\inventario\service\InventarioService.class
