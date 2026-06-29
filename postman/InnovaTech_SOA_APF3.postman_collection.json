@@ -1,0 +1,47 @@
+{
+  "info": {
+    "name": "InnovaTech SOA - APF3",
+    "description": "Colección oficial de pruebas de integración (Caja Negra) para la arquitectura orientada a servicios de InnovaTech.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Orquestador - Ventas POS (Sprint 3)",
+      "item": [
+        {
+          "name": "Checkout Venta POS (Prueba de Integración)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productoId\": \"SKU-123\",\n  \"cantidad\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/ventas-pos/checkout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "ventas-pos",
+                "checkout"
+              ]
+            },
+            "description": "Prueba de extremo a extremo (End-to-End) que ataca al API Gateway (8080). El Gateway enruta la petición dinámica al Orquestador (servicio-ventapos), y este a su vez usa WebClient para contactar al servicio-inventario."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
