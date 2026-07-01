@@ -1,0 +1,3 @@
+com\innovatech\notificaciones\controller\NotificacionController.class
+com\innovatech\notificaciones\dto\NotificacionRequest.class
+com\innovatech\notificaciones\NotificacionesApplication.class

@@ -1,0 +1,7 @@
+com\innovatech\catalogo\model\Articulo$Precios.class
+com\innovatech\catalogo\config\DataInitializer.class
+com\innovatech\catalogo\controller\CatalogoController.class
+com\innovatech\catalogo\model\Articulo.class
+com\innovatech\catalogo\repository\ArticuloRepository.class
+com\innovatech\catalogo\model\Articulo$Detalles.class
+com\innovatech\catalogo\CatalogoApplication.class

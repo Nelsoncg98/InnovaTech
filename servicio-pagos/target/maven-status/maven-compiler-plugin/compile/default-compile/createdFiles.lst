@@ -1,0 +1,4 @@
+com\innovatech\pagos\PagosApplication.class
+com\innovatech\pagos\controller\PagoController.class
+com\innovatech\pagos\model\PagoRequest.class
+com\innovatech\pagos\model\PagoResponse.class

@@ -30,6 +30,48 @@ services:
     networks:
       - soa-network
 
+  # Zookeeper (Requisito para Kafka)
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: innovatech-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - soa-network
+
+  # Apache Kafka (Bus de Eventos Asíncronos para el ERP SAP)
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: innovatech-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - soa-network
+
+  # WSO2 Micro Integrator (Enterprise Service Bus)
+  wso2-mi:
+    image: wso2/wso2mi:4.2.0
+    container_name: innovatech-wso2
+    ports:
+      - "8290:8290" # Puerto HTTP donde escuchará las peticiones XML del POS
+      - "8253:8253"
+    volumes:
+      - ./wso2-config/api:/home/wso2carbon/wso2mi-4.2.0/repository/deployment/server/synapse-configs/default/api
+    networks:
+      - soa-network
+
 networks:
   soa-network:
     driver: bridge

@@ -1,6 +1,14 @@
+com\innovatech\ventapos\repository\VentaPosRepository.class
+com\innovatech\ventapos\model\SalesOrderCanonical$Cliente.class
+com\innovatech\ventapos\model\VentaPos.class
 com\innovatech\ventapos\controller\VentaPosController.class
-com\innovatech\ventapos\service\VentaPosService.class
-com\innovatech\ventapos\model\CheckoutRequest.class
+com\innovatech\ventapos\model\SalesOrderCanonical$Detalle.class
+com\innovatech\ventapos\model\SalesOrderCanonical.class
+com\innovatech\ventapos\model\PagoRequest.class
+com\innovatech\ventapos\model\PagoResponse.class
 com\innovatech\ventapos\model\CheckoutResponse.class
 com\innovatech\ventapos\config\WebClientConfig.class
 com\innovatech\ventapos\VentaPosApplication.class
+com\innovatech\ventapos\model\SalesOrderCanonical$Pago.class
+com\innovatech\ventapos\service\VentaPosService.class
+com\innovatech\ventapos\model\CheckoutRequest.class

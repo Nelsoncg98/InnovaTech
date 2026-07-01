@@ -1,0 +1,8 @@
+com\innovatech\ventaweb\model\VentaWebRequest$DatosPago.class
+com\innovatech\ventaweb\model\VentaWebRequest.class
+com\innovatech\ventaweb\VentaWebApplication.class
+com\innovatech\ventaweb\service\VentaWebService.class
+com\innovatech\ventaweb\model\VentaWebRequest$ItemCarrito.class
+com\innovatech\ventaweb\config\WebClientConfig.class
+com\innovatech\ventaweb\controller\VentaWebController.class
+com\innovatech\ventaweb\model\VentaWebResponse.class

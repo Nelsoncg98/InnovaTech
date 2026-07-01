@@ -1,0 +1,6 @@
+com\innovatech\erpsap\model\GuiaRemisionRequest.class
+com\innovatech\erpsap\model\StockEvent.class
+com\innovatech\erpsap\service\KafkaProducerService.class
+com\innovatech\erpsap\controller\ErpController.class
+com\innovatech\erpsap\ErpSapApplication.class
+com\innovatech\erpsap\model\GuiaRemisionRequest$ArticuloIngreso.class

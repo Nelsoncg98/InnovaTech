@@ -6,10 +6,40 @@
   },
   "item": [
     {
-      "name": "Orquestador - Ventas POS (Sprint 3)",
+      "name": "1. WSO2 Enterprise Service Bus",
       "item": [
         {
-          "name": "Checkout Venta POS (Prueba de Integración)",
+          "name": "WSO2 - Proxy POS (XML -> JSON)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/xml",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<PosOrder>\n    <caja>CAJA-01</caja>\n    <dni>76543210</dni>\n    <sku>SKU-LAP-001</sku>\n    <cantidad>1</cantidad>\n    <monto>3500.0</monto>\n    <token>0000_1234_visa</token>\n</PosOrder>"
+            },
+            "url": {
+              "raw": "http://localhost:8290/wso2/pos/checkout",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8290",
+              "path": ["wso2", "pos", "checkout"]
+            },
+            "description": "El POS envía XML al WSO2. WSO2 lo transforma al SalesOrderCanonical (JSON) y dispara el SAGA en VentaPos."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Orquestador SAGA - Ventas (POS y Web)",
+      "item": [
+        {
+          "name": "Ventas POS Directo (Bypass WSO2)",
           "request": {
             "method": "POST",
             "header": [
@@ -21,25 +51,145 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"productoId\": \"SKU-123\",\n  \"cantidad\": 1\n}"
+              "raw": "{\n  \"ordenId\": \"VTA-001\",\n  \"canalOrigen\": \"POS\",\n  \"cliente\": {\n    \"numeroDocumento\": \"72019999\"\n  },\n  \"detalles\": [\n    {\n      \"codigoArticulo\": \"SKU-LAP-001\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 3500.00\n    }\n  ],\n  \"pago\": {\n    \"metodo\": \"TARJETA_CREDITO\",\n    \"tokenTarjeta\": \"1111-visa-valido\",\n    \"montoTotal\": 3500.00\n  }\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/api/v1/ventas-pos/checkout",
+              "raw": "http://localhost:8082/api/v1/ventas-pos/checkout",
               "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8080",
-              "path": [
-                "api",
-                "v1",
-                "ventas-pos",
-                "checkout"
-              ]
+              "host": ["localhost"],
+              "port": "8082",
+              "path": ["api", "v1", "ventas-pos", "checkout"]
+            }
+          }
+        },
+        {
+          "name": "Ventas Web (E-Commerce)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": \"USER-WEB-888\",\n  \"carrito\": [\n    {\n      \"sku\": \"SKU-LAP-001\",\n      \"cantidad\": 2\n    }\n  ],\n  \"datosPago\": {\n    \"tokenTarjeta\": \"tkn_web_visa\"\n  }\n}"
             },
-            "description": "Prueba de extremo a extremo (End-to-End) que ataca al API Gateway (8080). El Gateway enruta la petición dinámica al Orquestador (servicio-ventapos), y este a su vez usa WebClient para contactar al servicio-inventario."
-          },
-          "response": []
+            "url": {
+              "raw": "http://localhost:8087/api/v1/ventas-web/checkout",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8087",
+              "path": ["api", "v1", "ventas-web", "checkout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. ERP y Eventos Asíncronos",
+      "item": [
+        {
+          "name": "Ingreso SAP (Dispara Kafka)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guiaRemisionId\": \"GR-999\",\n  \"proveedorId\": \"20123456789\",\n  \"articulos\": [\n    {\n      \"codigoArticulo\": \"SKU-LAP-001\",\n      \"cantidadRecibida\": 500\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8086/api/v1/erp/recepcion-mercaderia",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8086",
+              "path": ["api", "v1", "erp", "recepcion-mercaderia"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Proveedores y Logística (B2B)",
+      "item": [
+        {
+          "name": "Validar Guía (Proveedores)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"guiaRemision\": \"GUIA-VERDADERA-123\",\n  \"rucProveedor\": \"20123456789\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8088/api/v1/proveedores/guia/validar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8088",
+              "path": ["api", "v1", "proveedores", "guia", "validar"]
+            }
+          }
+        },
+        {
+          "name": "Emitir Despacho (Transporte)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idPedidoVenta\": \"ORD-001\",\n  \"direccionDestino\": \"Av. Javier Prado 123\",\n  \"distrito\": \"San Isidro\",\n  \"volumenBulto\": \"MEDIANO\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8089/api/v1/transporte/despacho",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8089",
+              "path": ["api", "v1", "transporte", "despacho"]
+            }
+          }
+        },
+        {
+          "name": "Enviar Alerta (Notificaciones)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destinatarioEmail\": \"cliente@gmail.com\",\n  \"canal\": \"EMAIL\",\n  \"tipoPlantilla\": \"COMPRA_CONFIRMADA\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/v1/notificaciones/enviar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "v1", "notificaciones", "enviar"]
+            }
+          }
         }
       ]
     }

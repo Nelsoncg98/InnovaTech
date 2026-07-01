@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/wso2/pos/checkout" name="POS_Checkout_API" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/">
+        <inSequence>
+            <!-- 1. Indicar que la respuesta hacia el Backend sera en JSON -->
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            
+            <!-- 2. Extraer variables del XML enviado por el POS C# -->
+            <property name="var_sede" expression="//PosOrder/sedeId/text()"/>
+            <property name="var_caja" expression="//PosOrder/cajaId/text()"/>
+            <property name="var_dni" expression="//PosOrder/dniCliente/text()"/>
+            <property name="var_nombre" expression="//PosOrder/nombreCliente/text()"/>
+            <property name="var_monto" expression="//PosOrder/montoTotal/text()"/>
+            <property name="var_token" expression="//PosOrder/tokenTarjeta/text()"/>
+            <property name="var_sku" expression="//PosOrder/articulos/articulo[1]/codigoArticulo/text()"/>
+            <property name="var_cantidad" expression="//PosOrder/articulos/articulo[1]/cantidad/text()"/>
+            <property name="var_precio" expression="//PosOrder/articulos/articulo[1]/precioUnitario/text()"/>
+
+            <!-- 3. Transformacion al Canonical Data Model JSON (APF2) -->
+            <payloadFactory media-type="json">
+                <format>
+                    {
+                        "ordenId": "ORD-POS-WSO2",
+                        "canalOrigen": "POS",
+                        "sedeId": "$1",
+                        "cajaId": "$2",
+                        "fechaTransaccion": "2026-06-29T12:00:00Z",
+                        "cliente": {
+                            "numeroDocumento": "$3",
+                            "nombreCompleto": "$4"
+                        },
+                        "detalles": [
+                            {
+                                "codigoArticulo": "$7",
+                                "descripcion": "Articulo Fisico",
+                                "cantidad": $8,
+                                "precioUnitario": $9
+                            }
+                        ],
+                        "pago": {
+                            "metodo": "TARJETA_CREDITO",
+                            "tokenTarjeta": "$6",
+                            "montoTotal": $5,
+                            "estado": "PENDIENTE"
+                        }
+                    }
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:var_sede"/>
+                    <arg evaluator="xml" expression="$ctx:var_caja"/>
+                    <arg evaluator="xml" expression="$ctx:var_dni"/>
+                    <arg evaluator="xml" expression="$ctx:var_nombre"/>
+                    <arg evaluator="xml" expression="$ctx:var_monto"/>
+                    <arg evaluator="xml" expression="$ctx:var_token"/>
+                    <arg evaluator="xml" expression="$ctx:var_sku"/>
+                    <arg evaluator="xml" expression="$ctx:var_cantidad"/>
+                    <arg evaluator="xml" expression="$ctx:var_precio"/>
+                </args>
+            </payloadFactory>
+
+            <!-- 4. Enrutamiento al Orquestador SAGA de Spring Boot -->
+            <call>
+                <endpoint>
+                    <!-- host.docker.internal apunta al localhost de tu Windows donde corre el API Gateway -->
+                    <http method="post" uri-template="http://host.docker.internal:8080/api/v1/ventas-pos/checkout"/>
+                </endpoint>
+            </call>
+
+            <!-- 5. Responder al POS -->
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

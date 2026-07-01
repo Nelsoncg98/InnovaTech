@@ -1,5 +1,13 @@
-C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\InventarioApplication.java
-C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\service\InventarioService.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\config\DataInitializer.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\dto\InventoryStockCanonical.java
 C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\controller\InventarioController.java
-C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\model\Inventario.java
 C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\repository\InventarioRepository.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\dto\IngresoRequest.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\model\StockEvent.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\InventarioApplication.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\dto\ConfirmarRequest.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\dto\ReservaRequest.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\service\InventarioService.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\dto\LiberarRequest.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\model\Inventario.java
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\servicio-inventario\src\main\java\com\innovatech\inventario\service\KafkaConsumerService.java

@@ -18,9 +18,27 @@ El sistema implementa el patrón **Database-per-Service** para garantizar el ais
 *   `servicio-catalogo` (MongoDB): Gestión de productos y precios.
 *   `servicio-inventario` (PostgreSQL): Control de Kardex con segregación lógica de bodegas (Web/Física).
 *   `servicio-clientes` (PostgreSQL): Registro y validación de usuarios.
+*   `servicio-proveedores` (Port 8088): Validación de Guías de Remisión y Políticas de Garantía B2B.
 
 ### Capa de Orquestación (Task Services / BFF)
-*   `servicio-ventapos`: Director de transacciones físicas, orquesta inventario, clientes y pasarelas de pago implementando el patrón SAGA (Rollback lógico).
+*   `servicio-ventapos` (Port 8082): Orquestador de transacciones físicas, maneja clientes, inventario y pasarelas de pago (Patrón SAGA).
+*   `servicio-ventaweb` (Port 8087): Orquestador del E-commerce, coordina inventario, pagos y despachos (Patrón SAGA).
+*   `api-gateway` (Port 8080): Punto de entrada único y enrutamiento central.
+*   `eureka-server` (Port 8761): Service Discovery (Registro de microservicios).
+
+### Capa de Utilitarios (Utility Services)
+*   `servicio-pagos` (Port 8085): Proxy abstracto hacia la pasarela de Visa/Niubiz.
+*   `servicio-transporte` (Port 8089): Generador de tracking de última milla (Olva Courier).
+*   `servicio-notificaciones` (Port 8090): Motor asíncrono de alertas (Email, SMS).
+
+### Capa de Integración & Eventos
+*   `servicio-erp-sap` (Port 8086): Emulador del ERP central que publica ingresos de mercadería.
+*   **Apache Kafka**: Bus de mensajería (Event-Driven) para sincronización asíncrona de inventario.
+
+### Capa de Presentación (Frontends)
+*   `frontend-web`: E-commerce en React + Vite.
+*   `frontend-erp`: Interfaz de ingresos al almacén (React + Vite).
+*   `frontend-pos`: Prototipo de caja (React) - *Próximamente en C# .NET + WSO2*.
 
 ## 🚀 Guía de Despliegue Local (Desarrollo)
 

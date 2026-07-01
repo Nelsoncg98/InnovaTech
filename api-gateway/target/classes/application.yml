@@ -38,6 +38,24 @@ spring:
           uri: lb://servicio-inventario
           predicates:
             - Path=/api/v1/inventario/**
+            
+        # Ruta para el Orquestador Web
+        - id: ruta-orquestador-web
+          uri: lb://servicio-ventaweb
+          predicates:
+            - Path=/api/v1/ventas-web/**
+
+        # Ruta para Transporte (Guias PDF)
+        - id: ruta-transporte
+          uri: lb://servicio-transporte
+          predicates:
+            - Path=/api/v1/transporte/**
+            
+        # Ruta para Clientes
+        - id: ruta-clientes
+          uri: lb://servicio-clientes
+          predicates:
+            - Path=/api/v1/clientes/**
 
 eureka:
   client:

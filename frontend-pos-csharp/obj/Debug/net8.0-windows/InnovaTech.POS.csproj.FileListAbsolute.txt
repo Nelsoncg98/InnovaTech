@@ -1,0 +1,15 @@
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\bin\Debug\net8.0-windows\InnovaTech.POS.exe
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\bin\Debug\net8.0-windows\InnovaTech.POS.deps.json
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\bin\Debug\net8.0-windows\InnovaTech.POS.runtimeconfig.json
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\bin\Debug\net8.0-windows\InnovaTech.POS.dll
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\bin\Debug\net8.0-windows\InnovaTech.POS.pdb
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\obj\Debug\net8.0-windows\InnovaTech.POS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\obj\Debug\net8.0-windows\InnovaTech.POS.AssemblyInfoInputs.cache
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\obj\Debug\net8.0-windows\InnovaTech.POS.AssemblyInfo.cs
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\obj\Debug\net8.0-windows\InnovaTech.POS.csproj.CoreCompileInputs.cache
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\obj\Debug\net8.0-windows\InnovaTech.POS.sourcelink.json
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\obj\Debug\net8.0-windows\InnovaTech.POS.dll
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\obj\Debug\net8.0-windows\refint\InnovaTech.POS.dll
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\obj\Debug\net8.0-windows\InnovaTech.POS.pdb
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\obj\Debug\net8.0-windows\InnovaTech.POS.genruntimeconfig.cache
+C:\Users\Nelson\Desktop\InnovaTech_SOA_APF3\frontend-pos-csharp\obj\Debug\net8.0-windows\ref\InnovaTech.POS.dll

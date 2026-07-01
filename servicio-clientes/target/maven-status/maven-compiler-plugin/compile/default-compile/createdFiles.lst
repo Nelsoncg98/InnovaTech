@@ -1,0 +1,12 @@
+com\innovatech\clientes\dto\RegisterRequest.class
+com\innovatech\clientes\dto\AuthRequest.class
+com\innovatech\clientes\dto\CustomerCanonical.class
+com\innovatech\clientes\controller\AuthController.class
+com\innovatech\clientes\controller\ClienteController.class
+com\innovatech\clientes\ClientesApplication.class
+com\innovatech\clientes\repository\ClienteRepository.class
+com\innovatech\clientes\config\JwtUtil.class
+com\innovatech\clientes\dto\CustomerCanonical$Contacto.class
+com\innovatech\clientes\dto\AuthResponse.class
+com\innovatech\clientes\model\Cliente.class
+com\innovatech\clientes\config\DataInitializer.class

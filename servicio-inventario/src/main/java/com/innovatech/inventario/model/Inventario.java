@@ -2,6 +2,7 @@ package com.innovatech.inventario.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "inventario")
@@ -12,9 +13,30 @@ public class Inventario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false, unique = true)
+    @Column()
     private String productoId;
     
-    @Column(nullable = false)
-    private Integer stockDisponible;
+    @Column()
+    private String bodegaLogicaId = "BOD-WEB-CENTRAL";
+    
+    @Column()
+    private String canalAsignado = "WEB"; // WEB o POS
+    
+    @Column()
+    private Integer stockFisicoTotal = 0;
+    
+    @Column()
+    private Integer stockReservado = 0;
+    
+    @Column()
+    private Integer stockDisponibleVenta = 0;
+    
+    @Column()
+    private Integer stockCuarentena = 0;
+    
+    @Column()
+    private Integer umbralAlerta = 10;
+    
+    @Column()
+    private LocalDateTime ultimaActualizacion = LocalDateTime.now();
 }

@@ -6,4 +6,6 @@ import lombok.Data;
 public class CheckoutRequest {
     private String productoId;
     private Integer cantidad;
+    private String documentoCliente;
+    private String numeroTarjeta;
 }

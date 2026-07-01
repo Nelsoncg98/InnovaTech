@@ -1,32 +1,51 @@
 package com.innovatech.inventario.controller;
 
 import com.innovatech.inventario.service.InventarioService;
+import com.innovatech.inventario.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping("/api/inventario")
+@RequestMapping("/api/v1/inventario")
 @RequiredArgsConstructor
 public class InventarioController {
 
     private final InventarioService inventarioService;
 
-    @GetMapping("/{productoId}/stock")
-    public ResponseEntity<Integer> consultarStock(@PathVariable String productoId) {
-        return ResponseEntity.ok(inventarioService.getStock(productoId));
+    @GetMapping("/{codigoArticulo}")
+    public ResponseEntity<InventoryStockCanonical> consultarStock(
+            @PathVariable String codigoArticulo,
+            @RequestParam String sedeId) {
+        return ResponseEntity.ok(inventarioService.consultarStock(codigoArticulo, sedeId));
     }
 
-    @PostMapping("/{productoId}/descontar")
-    public ResponseEntity<String> descontarStock(
-            @PathVariable String productoId, 
-            @RequestParam Integer cantidad) {
-        
-        boolean exito = inventarioService.descontarStock(productoId, cantidad);
-        if (exito) {
-            return ResponseEntity.ok("Stock descontado exitosamente");
-        } else {
-            return ResponseEntity.badRequest().body("Stock insuficiente o producto no encontrado");
+    @PutMapping("/reserva")
+    public ResponseEntity<Void> reserva(@RequestBody ReservaRequest request) {
+        inventarioService.reservarStock(request);
+        return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/confirmar")
+    public ResponseEntity<Void> confirmar(@RequestBody ConfirmarRequest request) {
+        inventarioService.confirmarStock(request);
+        return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/liberar")
+    public ResponseEntity<Void> liberar(@RequestBody LiberarRequest request) {
+        inventarioService.liberarStock(request);
+        return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/ingreso")
+    public ResponseEntity<?> ingreso(@RequestBody IngresoRequest request) {
+        try {
+            inventarioService.ingresarMercaderia(request);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 }

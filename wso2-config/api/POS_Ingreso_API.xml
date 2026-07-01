@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/wso2/pos/ingreso" name="POS_Ingreso_API" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/">
+        <inSequence>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            
+            <property name="var_sede" expression="//IngresoLote/sedeId/text()"/>
+            <property name="var_caja" expression="//IngresoLote/cajaId/text()"/>
+            <property name="var_sku" expression="//IngresoLote/articulos/articulo[1]/codigoArticulo/text()"/>
+            <property name="var_cantidad" expression="//IngresoLote/articulos/articulo[1]/cantidad/text()"/>
+
+            <payloadFactory media-type="json">
+                <format>
+                    {
+                        "origen": "$2",
+                        "sedeId": "$1",
+                        "articulos": [
+                            {
+                                "codigoArticulo": "$3",
+                                "cantidad": $4
+                            }
+                        ]
+                    }
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="$ctx:var_sede"/>
+                    <arg evaluator="xml" expression="$ctx:var_caja"/>
+                    <arg evaluator="xml" expression="$ctx:var_sku"/>
+                    <arg evaluator="xml" expression="$ctx:var_cantidad"/>
+                </args>
+            </payloadFactory>
+
+            <call>
+                <endpoint>
+                    <!-- host.docker.internal apunta al API Gateway -->
+                    <http method="post" uri-template="http://host.docker.internal:8080/api/v1/inventario/ingreso"/>
+                </endpoint>
+            </call>
+
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>
